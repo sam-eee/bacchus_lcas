@@ -77,6 +77,10 @@
       type= "rviz"
       args="-d $(arg rviz_config_file)" />
   </group>
+	
+  <!--Adding GNSS to simulation -->
+  
+  
 
 </launch>
 
