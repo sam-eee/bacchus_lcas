@@ -14,8 +14,10 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   thorvald_twist_mux
   velodyne_description
-  #velodyne_gazebo_plugins
   kinect2_description
+  hector_gazebo_plugins
+  gazebo_plugins
+  dynamic_reconfigure
 )
 
 find_package (gazebo REQUIRED)
@@ -26,6 +28,12 @@ if(CMAKE_HOST_UNIX)
 else()
   message(FATAL_ERROR "Only UNIX builds supported.")
 endif()
+
+find_package(catkin REQUIRED dynamic_reconfigure)
+generate_dynamic_reconfigure_options(
+  cfg/GNSS.cfg
+)
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -120,9 +128,13 @@ endif()
 catkin_package(
   INCLUDE_DIRS ${GAZEBO_INCLUDE_DIRS}
   LIBRARIES  ActorCollisionsPlugin
-  CATKIN_DEPENDS roscpp #gazebo_plugins gazebo_ros
+  CATKIN_DEPENDS roscpp gazebo_plugins gazebo_ros
 )
-
+catkin_package(
+ INCLUDE_DIRS ${GAZEBO_INCLUDE_DIRS}
+ LIBRARIES gazebo_ros_gps
+ CATKIN_DEPENDS roscpp gazebo_dev std_msgs std_srvs geometry_msgs nav_msgs tf dynamic_reconfigure message_generation
+)
 
 ###########
 ## Build ##
@@ -137,11 +149,13 @@ include_directories( ${catkin_INCLUDE_DIRS}
 )
 set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
+link_directories(${GAZEBO_LIBRARY_DIRS})
+add_library(gazebo_ros_gps src/gazebo_ros_gps.cc)
 
 link_directories(${GAZEBO_LIBRARY_DIRS})
 add_library(ActorCollisionsPlugin src/ActorCollisionsPlugin.cc)
 
-## Declare a C++ library
+# Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/bacchus_gazebo.cpp
 # )
@@ -191,12 +205,17 @@ install(PROGRAMS
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ActorCollisionsPlugin
+install(TARGETS gazebo_ros_gps
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+install(TARGETS ActorCollisionsPlugin
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
 #   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
