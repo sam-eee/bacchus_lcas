@@ -120,6 +120,19 @@
         <real_time_factor>1</real_time_factor>
         <max_step_size>0.005</max_step_size>
     </physics>
-    <gravity>0 0 -9.8</gravity>
-  </world>
+    <plugin name ="ros_gps_plugin" filename="libgazebo_ros_gps.so">   
+    <alwayson>true</alwayson>
+    <updaterate>1.0</updaterate>
+    <bodyname>base_link</bodyname>
+    <topicname>/fix</topicname>
+    <velocitytopicname>/fix_velocity</velocitytopicname>
+    <drift>5.0 5.0 5.0</drift>
+    <gaussiannoise>0.1 0.1 0.1</gaussiannoise>
+    <velocitydrift>0 0 0</velocitydrift>
+    <velocitygaussiannoise>0.1 0.1 0.1</velocitygaussiannoise>
+
+
+    </plugin>
+
+ </world>
 </sdf>
