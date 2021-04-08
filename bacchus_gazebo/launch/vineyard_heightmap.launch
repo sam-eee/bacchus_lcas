@@ -24,7 +24,7 @@
   <arg name="verbose" default="false"/>
 
   <!-- RVIZ arguments -->
-  <arg name="launch_rviz" default="True"/>
+  <arg name="launch_rviz" default="true"/>
   <arg name="rviz_config_file" default="$(find bacchus_gazebo)/rviz/vineyard_demo.rviz"/>
 
 
