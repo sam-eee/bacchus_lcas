@@ -7,8 +7,8 @@
   <xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_hokuyo_laser_bottom_left.xacro" />
   <xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_velodyne_vlp16.xacro" />
   <xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_kinect_v2_front.xacro" />
-  <xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_kinect_v2_left.xacro" />
-  <xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_kinect_v2_right.xacro" />
+  <!--xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_kinect_v2_left.xacro" /-->
+  <!--xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_kinect_v2_right.xacro" /-->
   <xacro:include filename="$(find bacchus_gazebo)/urdf/sensors/sensor_imu.xacro" />
 
 </robot>
