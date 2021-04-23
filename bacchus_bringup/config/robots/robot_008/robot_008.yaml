@@ -127,13 +127,24 @@ imu: {model: "um7",
       roll: 0.0, pitch: 0.0, yaw: 0.0}
 
 
-# Cameras
-cameras: {camera1: {make: "basler",
-                    model: "ac1440",
-                    type: "2d",
-                    parent_link: "corner2_2",
-                    topic_prefix: "basler_ace1440_camera",
-                    suffix: "0",
+cameras: {camera1: {make: "zed",
+                    model: "zed2",
+                    type: "3d",
+                    parent_link: "base_link",
+                    topic_prefix: "zed2_camera1",
+                    suffix: "1",
                     output_sim: "true",
-                    x: 0.05, y: 0.0, z: 0.18,
-                    roll: 0.0, pitch: 0.0, yaw: -1.5708}}
+                    x: 0.17, y: 0.04, z: 1.10,
+                    roll: 0.0, pitch: 0.0, yaw: 0.0}}
+
+
+# # Cameras
+# cameras: {camera1: {make: "basler",
+#                     model: "ac1440",
+#                     type: "2d",
+#                     parent_link: "corner2_2",
+#                     topic_prefix: "basler_ace1440_camera",
+#                     suffix: "0",
+#                     output_sim: "true",
+#                     x: 0.05, y: 0.0, z: 0.18,
+#                     roll: 0.0, pitch: 0.0, yaw: -1.5708}}
