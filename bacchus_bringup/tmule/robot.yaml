@@ -225,10 +225,8 @@ windows:
 - name: ouster
   tags: [site]
   panes:
-  -  rosrun tf static_transform_publisher 0 0 0 0 0 0 os1_sensor os_sensor 100
+  - rosrun tf static_transform_publisher 0 0 0 0 0 0 os1_sensor os_sensor 100
   - roslaunch ouster_ros ouster.launch udp_dest:="192.168.0.101" sensor_hostname:="192.168.0.12" timestamp_mode:="TIME_FROM_PTP_1588" 
-  - sudo ptp4l -i eno1 -m -f ~/os1.conf
-
 - name: debug
   tags: [base]
   panes:
