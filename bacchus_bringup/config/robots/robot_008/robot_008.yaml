@@ -123,7 +123,7 @@ gnss_antenna_aux: {x: 0.365, y: -0.307, z: 1.215,
 # IMU
 imu: {model: "um7",
       parent_link: "base_link",
-      x: -0.00, y: 0.00, z: 1.20,
+      x: -0.00, y: -0.03, z: 1.20,
       roll: 0.0, pitch: 0.0, yaw: 0.0}
 
 
