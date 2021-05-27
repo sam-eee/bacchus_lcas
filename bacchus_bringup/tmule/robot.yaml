@@ -64,6 +64,8 @@ init_cmd: |
   # Lidars
   export_default LIDAR_TYPE_FRONT umt30lxew
   export_default LIDAR_TYPE_BACK umt30lxew
+  export_default LIDAR_TYPE_TOP os1
+  export_default USE_TOP_LASER false
   export_default USE_FRONT_LASER true
   export_default USE_BACK_LASER true
 
@@ -178,11 +180,15 @@ windows:
 - name: sensors_bringup
   tags: [base]
   panes:
-  - if ! $USE_SIM && $USE_FRONT_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_FRONT" position:="front" ip_address:="192.168.0.11"; fi
-  - if ! $USE_SIM && $USE_BACK_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_BACK" position:="back"  ip_address:="192.168.0.10"; fi
   - if ! $USE_SIM && $USE_IMU; then roslaunch rasberry_bringup rasberry_imu.launch use_imu:="$USE_IMU" um7_imu_port:="$UM7_IMU_PORT" use_xsens:="$USE_XSENS"; fi
   - if ! $USE_SIM && $USE_RTK; then roslaunch rasberry_bringup rasberry_gnss.launch rtk_ip:="$RTK_IP" rtk_port:="$RTK_PORT" gnss_type:="$GNSS_TYPE" ins_activated:=$GNSS_INS_ACTIVATED; fi
   check: "rostopic list | egrep -q 'scan|fix'"
+- name: lidars_bringup
+  tags: [base]
+  panes:
+  - if ! $USE_SIM && $USE_FRONT_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_FRONT" position:="front" ip_address:="192.168.0.11"; fi
+  - if ! $USE_SIM && $USE_BACK_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_BACK" position:="back"  ip_address:="192.168.0.10"; fi
+  - if ! $USE_SIM && $USE_TOP_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_TOP" position:="top"  ip_address:="192.168.0.12"; fi
 - name: localisation_prelims
   tags: [site]
   panes:
@@ -222,11 +228,6 @@ windows:
   - if $STARTUP_SENTOR; then roslaunch rasberry_uv sentor.launch config_file:=$SENTOR_CONFIG auto_safety_tagging:=true; fi
   - roslaunch rasberry_monitors system_monitors.launch
   - if [ "$SLACK_WEBHOOK" ] && $STARTUP_SLACKEROS; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/sentor/event" loggers:="/rosout:error"; else cat; fi
-- name: ouster
-  tags: [site]
-  panes:
-  - rosrun tf static_transform_publisher 0 0 0 0 0 0 os1_sensor os_sensor 100
-  - roslaunch ouster_ros ouster.launch udp_dest:="192.168.0.101" sensor_hostname:="192.168.0.12" timestamp_mode:="TIME_FROM_PTP_1588" 
 - name: debug
   tags: [base]
   panes:
