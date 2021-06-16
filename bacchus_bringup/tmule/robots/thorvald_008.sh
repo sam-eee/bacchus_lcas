@@ -10,3 +10,4 @@ export LIDAR_TYPE_TOP=os1
 USE_GPS_ONLY=true
 USE_MEL=true
 USE_RTK=true
+export FRAMOS_CONFIG_FILE="`readlink -f ../config/robots/robot_${ROBOT_NO}/robot_${ROBOT_NO}_camera.yaml`"

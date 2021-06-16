@@ -158,6 +158,10 @@ init_cmd: |
   export_default ROW_CHANGE_CONFIG "$(rospack find bacchus_bringup)/config/site_files/default/open/row_change_cfg.yaml"
 
 
+  # Camera
+  # export_default FRAMOS_CONFIG_FILE "`readlink -f ../config/robots/robot_${ROBOT_NO}_camera.yaml`"
+  export_default FRAMOS_CONFIG_FILE ""
+
 # tags: core, nav
 windows:
 - name: roscore
@@ -189,6 +193,11 @@ windows:
   - if ! $USE_SIM && $USE_FRONT_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_FRONT" position:="front" ip_address:="192.168.0.11"; fi
   - if ! $USE_SIM && $USE_BACK_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_BACK" position:="back"  ip_address:="192.168.0.10"; fi
   - if ! $USE_SIM && $USE_TOP_LASER; then roslaunch rasberry_bringup rasberry_lidar.launch lidar_type:="$LIDAR_TYPE_TOP" position:="top"  ip_address:="192.168.0.12"; fi
+- name: cameras
+  panes:
+  - if ! $USE_SIM && [ ! -z ${FRAMOS_CONFIG_FILE} ] ; then if [[ "$(docker images -q framos/ros 2> /dev/null)" == "" ]]; then roslaunch rasberry_bringup framos_multiple_devices.launch multicam_config_file:="$FRAMOS_CONFIG_FILE"; else bash ~/framos_docker/ros/docker_compose_up.sh; fi; fi
+  check: "rostopic list | grep -q image_raw"
+  tags: [graspberry_perception, cameras, site]
 - name: localisation_prelims
   tags: [site]
   panes:

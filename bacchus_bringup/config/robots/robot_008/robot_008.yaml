@@ -135,7 +135,17 @@ cameras: {camera1: {make: "zed",
                     suffix: "1",
                     output_sim: "true",
                     x: 0.17, y: 0.04, z: 1.10,
-                    roll: 0.0, pitch: 0.0, yaw: 0.0}}
+                    roll: 0.0, pitch: 0.0, yaw: 0.0}
+	camera2: {make: "framos",
+                    model: "d435e",
+                    type: "3d",
+                    parent_link: "base_link",
+                    topic_prefix: "framos_camera1",
+                    suffix: "1",
+                    output_sim: "true",
+                    x: 0.17, y: 0.04, z: 1.13,
+                    roll: 0.0, pitch: 0.0, yaw: 0.0},
+}
 
 
 # # Cameras
